@@ -133,14 +133,17 @@ def main():
     
     input = sys.argv[1]
     output_dir = sys.argv[2]
+    prefix = ""
+    
+    if len(sys.argv) == 4:
+        prefix = sys.argv[3]
 
     assert_err(os.path.isfile(input), f"file '{input}' not found")
     assert_err(os.path.isdir(output_dir), f"directory '{output_dir}' not found")
 
     textures = convert(cv2.VideoCapture(input))
-    for side, texture in textures.items():
-        
-        textures[side] = cv2.imwrite(output_dir + "/" + side + ".png", texture)
+    for face, texture in textures.items():
+        cv2.imwrite(f"{output_dir}/{prefix}{face}.png", texture)
 
 if __name__ == "__main__":
     main()
