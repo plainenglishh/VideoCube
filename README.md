@@ -6,9 +6,8 @@ Converts a video into a series of textures to be applied to the surfaces of a cu
 
 ## Usage
 
-Run the following command with this directory as the working directory:
-
 ```bash
-# Change input and output as required
-py . ./input.mp4 ./output_folder
+py . <input> <output_dir> [prefix]
 ```
+
+This will create six images named in the format `[prefix][face].png`, e.g `left.png`.

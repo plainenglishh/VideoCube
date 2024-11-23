@@ -33,6 +33,9 @@ def convert(video: cv2.VideoCapture):
 
     frame_count = len(frames) - 1 # -2 to skim the random blank frame
 
+    assert_err(frame_count != -1, "failed to parse video")
+
+
     def front():
         '''
         Takes the first frame and leaves it unchanged.
@@ -129,12 +132,12 @@ def convert(video: cv2.VideoCapture):
     }   
 
 def main():
-    assert_err(len(sys.argv) == 3, "specify input file and output directory")
+    assert_err(len(sys.argv) >= 3, "specify input file and output directory")
     
     input = sys.argv[1]
     output_dir = sys.argv[2]
     prefix = ""
-    
+
     if len(sys.argv) == 4:
         prefix = sys.argv[3]
 
