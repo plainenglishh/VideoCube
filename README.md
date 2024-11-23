@@ -2,7 +2,7 @@
 
 ![Example](./samples/zoo_3d.png)
 
-Converts a video into a series of textures to be applied to the surfaces of a cube, where the cubes depth represents time, using OpenCV.
+Converts a video into a series of textures to be applied to the surfaces of a cube, where depth of the cube represents time, using OpenCV.
 
 ## Usage
 
