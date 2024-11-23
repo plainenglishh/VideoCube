@@ -15,6 +15,7 @@ def assert_err(cond: any, msg: str):
 def flipped(x: int) -> int:
     return -x - 1
 
+
 def convert(video: cv2.VideoCapture):
     '''
     Converts a VideoCapture to a dictionary containing
@@ -22,6 +23,7 @@ def convert(video: cv2.VideoCapture):
     '''
     height = int(video.get(cv2.CAP_PROP_FRAME_HEIGHT))
     width = int(video.get(cv2.CAP_PROP_FRAME_WIDTH))
+    fps = int(video.get(cv2.CAP_PROP_FPS))
     frames = []
 
     while True:
@@ -123,13 +125,18 @@ def convert(video: cv2.VideoCapture):
         return texture;
 
     return {
-        "front": front(),
-        "back": back(),
-        "top": top(),
-        "bottom": bottom(),
-        "right": right(),
-        "left": left(),
-    }   
+        "textures": {
+            "front": front(),
+            "back": back(),
+            "top": top(),
+            "bottom": bottom(),
+            "right": right(),
+            "left": left(),
+        },
+        "fps": fps,
+        "spf": 1/fps,
+    }
+
 
 def main():
     assert_err(len(sys.argv) >= 3, "specify input file and output directory")
@@ -144,9 +151,12 @@ def main():
     assert_err(os.path.isfile(input), f"file '{input}' not found")
     assert_err(os.path.isdir(output_dir), f"directory '{output_dir}' not found")
 
-    textures = convert(cv2.VideoCapture(input))
-    for face, texture in textures.items():
+    result = convert(cv2.VideoCapture(input))
+    for face, texture in result["textures"].items():
         cv2.imwrite(f"{output_dir}/{prefix}{face}.png", texture)
+
+    print(f"wrote textures to {output_dir}")
+    print(f"1 pixel = {round(result["spf"], 4)}s")
 
 if __name__ == "__main__":
     main()
